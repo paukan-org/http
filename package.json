@@ -1,6 +1,6 @@
 {
   "name": "paukan-http",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "http api for automated network + web interfaces",
   "repository": {
     "type": "git",
@@ -22,5 +22,6 @@
     "test": "./node_modules/.bin/mocha --bail"
   },
   "homepage": "https://github.com/paukan-org/http",
-  "author": "Andrey Afoninskiy <vkfont@gmail.com>"
+  "author": "Andrey Afoninskiy <vkfont@gmail.com>",
+  "license": "Apache"
 }
