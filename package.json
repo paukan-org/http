@@ -1,0 +1,26 @@
+{
+  "name": "paukan-http",
+  "version": "0.0.1",
+  "description": "http api for automated network + web interfaces",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:paukan-org/http.git"
+  },
+  "dependencies": {
+    "async": "^0.9.0",
+    "body-parser": "^1.10.1",
+    "express": "^4.11.0",
+    "node-uuid": "^1.4.2",
+    "paukan-utils": "*",
+    "primus": "^2.4.12",
+    "ws": "^0.7.1"
+  },
+  "devDependencies": {
+    "mocha": "^2.1.0"
+  },
+  "scripts": {
+    "test": "./node_modules/.bin/mocha --bail"
+  },
+  "homepage": "https://github.com/paukan-org/http",
+  "author": "Andrey Afoninskiy <vkfont@gmail.com>"
+}

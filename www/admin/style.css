@@ -1,0 +1,31 @@
+.btn-circle-big {
+  width: 150px;
+  height: 150px;
+  line-height: 140px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.btn-circle-medium {
+  width: 100px;
+  height: 100px;
+  line-height: 90px;
+  padding: 0;
+  border-radius: 50%;
+}
+
+.btn-panel {
+    width: 120px;
+}
+
+.btn-circle-medium, .btn-circle-big > span {
+    font-weight: bold;
+}
+
+.center {
+    text-align:center;
+}
+
+.center form {
+    display:inline-block;
+}
