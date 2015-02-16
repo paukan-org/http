@@ -3,6 +3,6 @@ deploy:
   provider: npm
   email: paukan.control@gmail.com
   api_key:
-    secure: MdFQ8ChGi4wTQ5sy0PhnLVG/A7i+dlHAGL9hEWWDJf+bOPVJwnHBDgwjMa5iGSW9HrV9rXVD7Qo8APn3n5H47xZ369qOZE4z3D03P9SuRiO1HDs3n7RkkKcgOJBopYmKd1WoR3bomuw5p/hrofXBLuKaemzfBaHux8i2zToXYdE=
+    secure: aP6UxbFwjr0q1EKhkoh+lG5qquhHa0EzpXX/3AsVmJFjay5O0ZT0G0ff+cu2DjoF80YSvNjtfnxgHwaxn5CPQIjJFLQHBM2V9zySIuoqx+tq6jxc+r4+NsT/vCH/LmDG8dTyjU92A+ft7C3MdOQV2kWDgwKQg6c10bDxC93Q+S4=
   on:
     repo: paukan-org/http
