@@ -6,3 +6,4 @@ deploy:
     secure: aP6UxbFwjr0q1EKhkoh+lG5qquhHa0EzpXX/3AsVmJFjay5O0ZT0G0ff+cu2DjoF80YSvNjtfnxgHwaxn5CPQIjJFLQHBM2V9zySIuoqx+tq6jxc+r4+NsT/vCH/LmDG8dTyjU92A+ft7C3MdOQV2kWDgwKQg6c10bDxC93Q+S4=
   on:
     repo: paukan-org/http
+    tags: true

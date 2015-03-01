@@ -3,12 +3,89 @@
 var scene = angular.module('Scene', []);
 scene.controller('SceneCtrl', ['$interval', '$scope', function($interval, $scope) {
 
+    var info = {};
 
-    // $scope.test = 'viewport';
-    // $interval(function() {
-    //     $scope.test = 'asd';
-    //     // console.log(123);
-    // }, 1000);
+    function recalcRatio() {
+        var width = window.innerWidth || document.body.clientWidth,
+            height = window.innerHeight || document.body.clientHeight,
+            bg = info.background;
+
+        info.ratio = {
+            width: width / bg.width,
+            height: height / bg.height
+        };
+        return info.ratio;
+    }
+
+    function setBackground(url) {
+
+        $scope.background = {
+            backgroundImage: 'url('+url+')',
+            backgroundSize: 'cover'
+        };
+
+        var img = new Image();
+        img.src = url;
+        img.onload = function () {
+            info.background = {
+                url: url,
+                width: img.width,
+                height: img.height
+            };
+            recalcRatio();
+        };
+    }
+
+    function scale(el, ratio) {
+
+        // var k = ratio.width > ratio.height ? ratio.width : ratio.height;
+        // if(!el.realSize) {
+        //     el.realSize = Math.round(el.size / k);
+        // }
+        // el.size = Math.round(el.realSize * k);
+    }
+
+    function redrawElementsOnResize() {
+        var ratio = recalcRatio(),
+            k = ratio.width > ratio.height ? ratio.width : ratio.height;
+        $scope.$apply(function () {
+            $scope.buttons.forEach(function (button) {
+                scale(button, ratio);
+            });
+        });
+        console.log('current ratio', ratio);
+    }
+
+    setBackground('images/plan.jpg');
+
+    var resizeInProgress, resizeFlag;
+    window.onresize = function () {
+        resizeFlag = true;
+        if(resizeInProgress) { return; }
+        if(resizeFlag) {
+            redrawElementsOnResize();
+            resizeFlag = false;
+        }
+        resizeInProgress = setTimeout(function() {
+            resizeInProgress = null;
+        }, 1000);
+    };
+
+    $scope.buttons = [{
+        type: 'default',
+        x: 100,
+        y: 100,
+        size: 100,
+        icon: 'pee'
+    },
+    // {
+    //     type: 'default',
+    //     x: 100,
+    //     y: 120,
+    //     size: 100,
+    //     icon: 'lightning-1'
+    // }];
+    ];
 
 }]);
 

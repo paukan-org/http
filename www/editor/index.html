@@ -20,9 +20,10 @@
 
 </head>
 
-<body ng-controller="SceneCtrl">
-    <ng-button type="" x="50" y="120" size="100" icon="lightning-1"></ng-button>
-
+<body ng-controller="SceneCtrl" ng-style="{{background}}">
+    <div class="grid">
+        <ng-button ng-repeat="button in buttons" type="{{button.type}}" x="{{button.x}}" y="{{button.y}}" size="{{button.size}}" icon="{{button.icon}}"></ng-button>
+    </div>
 </body>
 
 </html>
