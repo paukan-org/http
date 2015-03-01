@@ -1,0 +1,124 @@
+@charset "UTF-8";
+
+@font-face {
+  font-family: "font";
+  src:url("fonts/font.eot");
+  src:url("fonts/font.eot?#iefix") format("embedded-opentype"),
+    url("fonts/font.woff") format("woff"),
+    url("fonts/font.ttf") format("truetype"),
+    url("fonts/font.svg#font") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[data-icon]:before {
+  font-family: "font" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "font" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-brightness:before {
+  content: "b";
+}
+.icon-brightness-half:before {
+  content: "c";
+}
+.icon-spinner:before {
+  content: "a";
+}
+.icon-sound-off:before {
+  content: "d";
+}
+.icon-sound-alt:before {
+  content: "e";
+}
+.icon-sound:before {
+  content: "f";
+}
+.icon-plug:before {
+  content: "g";
+}
+.icon-pee:before {
+  content: "h";
+}
+.icon-bell-alarm:before {
+  content: "i";
+}
+.icon-man-people-streamline-user:before {
+  content: "j";
+}
+.icon-arrow-1-down:before {
+  content: "k";
+}
+.icon-next:before {
+  content: "l";
+}
+.icon-heart:before {
+  content: "m";
+}
+.icon-light-up:before {
+  content: "n";
+}
+.icon-viewport:before {
+  content: "o";
+}
+.icon-unlock-stroke:before {
+  content: "p";
+}
+.icon-unlock-fill:before {
+  content: "q";
+}
+.icon-vector-pen:before {
+  content: "r";
+}
+.icon-wifi-2:before {
+  content: "s";
+}
+.icon-wifi-3:before {
+  content: "t";
+}
+.icon-wifi-1:before {
+  content: "u";
+}
+.icon-swipe-down:before {
+  content: "v";
+}
+.icon-cloud-black-1:before {
+  content: "w";
+}
+.icon-cloud-black-2:before {
+  content: "x";
+}
+.icon-cloud-moon:before {
+  content: "y";
+}
+.icon-lightning-1:before {
+  content: "z";
+}
+.icon-lightning-2:before {
+  content: "A";
+}
+.icon-speaker-off:before {
+  content: "B";
+}
