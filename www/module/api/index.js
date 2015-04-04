@@ -3,13 +3,13 @@
  */
 'use strict';
 
-var app = angular.module('Paukan', []);
+var module = angular.module('Api', []);
 
-app.factory('primus', function() {
-    if(!Primus) { Primus = null; }    return Primus.connect();
+module.factory('primus', function() {
+    return Primus.connect();
 });
 
-app.service('PaukanService', ['primus', '$rootScope', '$http', function(primus, $rootScope, $http) {
+module.service('ApiService', ['primus', '$rootScope', '$http', function(primus, $rootScope, $http) {
     // emit event from network like 'state.service.device.item' with payload
     // ['state.*.*.*', 'request.*.*.*', 'reply.*.*.*']
     primus.on('data', function (data) {
@@ -32,6 +32,7 @@ app.service('PaukanService', ['primus', '$rootScope', '$http', function(primus, 
             });
     }
 
+    // execute redis function
     function redis() {
         var arg = [], callback, handleResponce, body = {};
 
