@@ -5,12 +5,14 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
 
     <title></title>
 
     <link href="/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="style.css" rel="stylesheet">
-    <link href="font/styles.css" rel="stylesheet">
+    <link href="/assets/style.css" rel="stylesheet">
+    <link href="/assets/icons/styles.css" rel="stylesheet">
 
     <script src="/lib/angular/angular.min.js"></script>
     <script src="/primus/primus.js"></script>
@@ -22,8 +24,8 @@
 
 <body>
 
-    <div ng-controller="SceneCtrl" class="plan grid">
-        <img src="images/plan.jpg">
+    <div ng-controller="SceneCtrl" class="plan">
+        <img src="/assets/images/flat.png">
         <ng-button ng-repeat="button in buttons" config="button"></ng-button>
     </div>
 

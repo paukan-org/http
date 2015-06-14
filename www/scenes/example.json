@@ -1,0 +1,32 @@
+{
+    "name": "test floor scene",
+    "version": "0.0.1",
+    "style": "/assets/style.css",
+    "resolution": {
+        "width": 640,
+        "height": 480
+    },
+    "image": "/assets/images/flat.png",
+    "modules": [
+        {
+            "type": "button",
+            "relative": true,
+            "x": 0,
+            "y": 40,
+            "size": 10,
+            "actions": [
+                {
+                    "on": {
+                        "event": ["ups.raspberry.charge", "eq", "100"],
+                        "type": "default",
+                        "icon": "wifi-3"
+                    },
+                    "click": {
+                        "send": ["ups.some.action", "123"],
+                        "icon": "wifi-2"
+                    }
+                }
+            ]
+        }
+    ]
+}

@@ -9,21 +9,31 @@ scene.controller('SceneCtrl', ['$scope', function($scope) {
 - при наступлении события проходим по {states} и выполняем подходящее условие
  */
     $scope.buttons = [{
-        x: 10, y: 10, size: 10,
-        bind: ['service', 'device', 'statename'],
-        states: [
+        x: 40, y: 40, size: 10,
+        states: [ // if: ['<', '>', '=', '*']
             {
-                if: ['<', 10], // if: ['<', '>', '=', '*']
-                then: {
-                    type: 'danger'
-                },
-                click: 1
-            }, {
+                if: ['ups.raspberry.charge', '=', 100],
                 then: {
                     type: 'default',
-                    icon: 'pee'
+                    icon: 'wifi-3'
                 },
                 click: 0
+            },
+            {
+                if: ['ups.raspberry.charge', '<', 30],
+                then: {
+                    type: 'danger',
+                    icon: 'wifi-1'
+                },
+                click: 1
+            },
+            {
+                if: ['ups.raspberry.charge', '<', 100],
+                then: {
+                    type: 'warning',
+                    icon: 'wifi-2'
+                },
+                click: 1
             }
         ]
     }];

@@ -1,6 +1,7 @@
 node_modules/
 bower_components/
 debug/
+.live-archive/
 .DS_Store
 test-report.xml
 npm-debug.log
