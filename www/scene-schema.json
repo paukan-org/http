@@ -16,6 +16,10 @@
             "type": "string",
             "minLength": 1
         },
+        "icons": {
+            "type": "string",
+            "minLength": 1
+        },
         "resolution": {
             "type": "object",
             "required": true,
@@ -59,15 +63,16 @@
                     },
                     "actions": {
                         "type": "array",
+                        "required": true,
                         "minItems": 1,
                         "items": {
                             "type": "object",
                             "properties": {
                                 "on": {
-                                    "$ref": "#action"
+                                    "$ref": "#state"
                                 },
                                 "click": {
-                                    "$ref": "#action"
+                                    "$ref": "#state"
                                 }
                             }
                         }
@@ -76,7 +81,7 @@
             }
         }
     },
-    "action": {
+    "state": {
         "type": "object",
         "properties": {
             "event": {
@@ -91,7 +96,7 @@
             },
             "type": {
                 "type": "string",
-                "enum": ["default", "primary", "success", "info", "warning", "danger", "link"]
+                "enum": ["default", "primary", "success", "info", "warning", "danger", "transparent"]
             },
             "icon": {
                 "type": "string",
