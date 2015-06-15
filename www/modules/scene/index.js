@@ -23,14 +23,7 @@ scene.service('SceneService', ['$q', function($q) {
                 img.src = json.image;
                 document.querySelector('#scene').appendChild(img);
             }
-            // find used modules and load corresponding schemas
-            var modules = (json.modules || []).map(function (v) {
-                return v.type;
-            }).filter(function (value, index, arr) {
-                return arr.indexOf(value) === index;
-            });
-            console.log(modules);
-            resolve('done :)');
+            resolve();
         });
     }
 
@@ -55,27 +48,32 @@ scene.controller('SceneCtrl', ['$scope', '$location', '$http', 'SceneService', f
         return console.log('please specify scene name');
     }
 
-    $scope.buttons = [{
-        "type": "button",
-        "relative": true,
-        "x": 0,
-        "y": 40,
-        "size": 10,
-        "icon": "wifi-3",
-        "actions": [
-            {
-                "on": {
-                    "event": ["ups.raspberry.charge", "eq", "100"],
-                    "type": "default",
-                    "icon": "wifi-3"
-                },
-                "click": {
-                    "send": ["ups.some.action", "123"],
-                    "icon": "wifi-2"
-                }
+    $scope.buttons = [
+        { // eq, ne, gt, lr, ge, le
+            'state.ups.raspberry.charge eq 100': {
+                x: 10,
+                y: 10,
+                size: 10,
+                icon: 'wifi-3',
+                disabled: false,
+                click: ['set.ups.raspberry.disabled 1', 'disabled']
+            },
+            'state.ups.raspberry.charge leq 50': {
+                icon: 'wifi-2',
+                disabled: false,
+                click: ['set.ups.raspberry.dummy', 'state.ups.raspberry.charge eq 100']
+            },
+            'state.ups.raspberry.charge like *': {
+                icon: 'wifi-1',
+                disabled: false
+            },
+            'disabled': {
+                icon: 'wifi-1',
+                disabled: true,
+                click: false
             }
-        ]
-    }];
+        }
+    ];
 
     // load scene schema and draw it on page
     $http.get('/scenes' + path + '.json')

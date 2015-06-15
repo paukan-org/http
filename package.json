@@ -17,9 +17,11 @@
     "ws": "^0.7.2"
   },
   "devDependencies": {
+    "livereload": "^0.3.7",
     "mocha": "^2.2.5"
   },
   "scripts": {
+    "live": "./node_modules/.bin/livereload",
     "test": "./node_modules/.bin/mocha --bail"
   },
   "homepage": "https://github.com/paukan-org/http",
