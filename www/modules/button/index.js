@@ -22,44 +22,44 @@ module.directive('ngButton', ['ApiService', function(Api) {
 
             function redraw() {
 
-                // el.className = 'btn btn-circle btn-' + (config.type || 'default');
-                // elSpan.className = 'icon icon-' + config.icon;
-                // elStyle.width = config.size + 'vmin';
-                // elStyle.height = config.size + 'vmin';
-                // elStyle.fontSize = (config.size - 4) + 'vmin';
-                // elStyle.lineHeight = config.size + 'vmin';
-                // elStyle.left = config.x + 'vmin';
-                // elStyle.top = config.y + 'vmin';
+                el.className = 'btn btn-circle btn-' + (config.type || 'default');
+                elSpan.className = 'icon icon-' + config.icon;
+                elStyle.width = config.size + 'vmin'; // recalc
+                elStyle.height = config.size + 'vmin';
+                elStyle.fontSize = (config.size - 4) + 'vmin';
+                elStyle.lineHeight = config.size + 'vmin';
+                elStyle.left = config.x + 'vmin';
+                elStyle.top = config.y + 'vmin';
             }
 
-            //
             function switchState(num) {
 
-                // console.log('[button] execute state #'+num);
-                // var state = states[num],
-                //     then = state.then || {};
-                // for(var i in then) {
-                //     config[i] = then[i];
-                // }
-                // currentState = num;
-                // redraw();
+                console.log('[button] execute state #'+num);
+                var state = actions[num].on || {};
+                for(var i in state) {
+                    if(i in config) {
+                        config[i] = state[i];
+                    }
+                }
+                currentState = num;
+                redraw();
             }
 
             function testState(action, value) {
 
-                // switch(action.operand) {
-                //     case '<':
-                //         return value < action.value;
-                //     case '>':
-                //         return value > action.value;
-                //     case '=':
-                //         return value == action.value; // '==' is correct
-                //     case '*':
-                //         var patt = new RegExp(action.value);
-                //         return patt.test(value);
-                //     default:
-                //         return true; // simply event fired
-                // }
+                switch(action.operand) {
+                    case '<':
+                        return value < action.value;
+                    case '>':
+                        return value > action.value;
+                    case '=':
+                        return value == action.value; // '==' is correct
+                    case '*':
+                        var patt = new RegExp(action.value);
+                        return patt.test(value);
+                    default:
+                        return true; // simple event fired
+                }
             }
 
             // find suitable state according event map and passed event value
@@ -103,7 +103,7 @@ module.directive('ngButton', ['ApiService', function(Api) {
                 }
             });
 
-            // switchState(0); // set default state
+            switchState(0); // set default state
 
             // scope.$on('event', function (event, data) {
             //

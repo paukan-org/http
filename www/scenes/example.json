@@ -15,6 +15,7 @@
             "x": 0,
             "y": 40,
             "size": 10,
+            "icon": "wifi-3",
             "actions": [
                 {
                     "on": {
@@ -35,6 +36,7 @@
             "x": 10,
             "y": 30,
             "size": 40,
+            "icon": "wifi-3",
             "actions": [
                 {
                     "on": {

@@ -61,6 +61,11 @@
                         "type": "number",
                         "required": true
                     },
+                    "type": {
+                        "type": "string",
+                        "required": true,
+                        "minLength": 1
+                    },
                     "actions": {
                         "type": "array",
                         "required": true,

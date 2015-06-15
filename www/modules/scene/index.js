@@ -61,6 +61,7 @@ scene.controller('SceneCtrl', ['$scope', '$location', '$http', 'SceneService', f
         "x": 0,
         "y": 40,
         "size": 10,
+        "icon": "wifi-3",
         "actions": [
             {
                 "on": {
