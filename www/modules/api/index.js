@@ -3,10 +3,10 @@
  */
 'use strict';
 
-var module = angular.module('Api', []);
+var module = angular.module('Api', []); // jshint ignore:line
 
 module.factory('primus', function() {
-    return Primus.connect();
+    return Primus.connect(); // jshint ignore:line
 });
 
 module.service('ApiService', ['primus', '$rootScope', '$http', function(primus, $rootScope, $http) {
@@ -18,12 +18,17 @@ module.service('ApiService', ['primus', '$rootScope', '$http', function(primus, 
 
     // send request to API and execute in form 'requiest.{service}.{device}.{state}'
     function request(service, device, state, payload, callback) {
+        return send(['request', service, device, state].join('.'), payload, callback);
+    }
+
+    // send raw request
+    function send(event, payload, callback) {
         var body = { set: payload };
         if(!callback) {
             callback = function() {};
             body.nowait = true;
         }
-        $http.post('/'+['request', service, device, state].join('/'), body)
+        $http.post('/'+event.replace(/\./g, '/'), body)
             .success(function (data, status, headers, config) {
                 return callback(null, data);
             })
@@ -58,6 +63,7 @@ module.service('ApiService', ['primus', '$rootScope', '$http', function(primus, 
 
     return {
         request: request,
+        send: send,
         redis: redis
     };
 

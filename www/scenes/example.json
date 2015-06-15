@@ -4,52 +4,34 @@
     "style": "/assets/style.css",
     "icons": "/assets/icons/styles.css",
     "resolution": {
-        "width": 640,
-        "height": 480
+        "width": 1360,
+        "height": 728
     },
     "image": "/assets/images/flat.png",
-    "modules": [
+    "buttons": [
         {
-            "type": "button",
-            "relative": true,
-            "x": 0,
-            "y": 40,
-            "size": 10,
-            "icon": "wifi-3",
-            "actions": [
-                {
-                    "on": {
-                        "event": ["ups.raspberry.charge", "eq", "100"],
-                        "type": "default",
-                        "icon": "wifi-3"
-                    },
-                    "click": {
-                        "send": ["ups.some.action", "123"],
-                        "icon": "wifi-2"
-                    }
-                }
-            ]
-        },
-        {
-            "type": "button",
-            "relative": true,
-            "x": 10,
-            "y": 30,
-            "size": 40,
-            "icon": "wifi-3",
-            "actions": [
-                {
-                    "on": {
-                        "event": ["ups.raspberry.charge", "eq", "100"],
-                        "type": "default",
-                        "icon": "wifi-3"
-                    },
-                    "click": {
-                        "send": ["ups.some.action", "123"],
-                        "icon": "wifi-2"
-                    }
-                }
-            ]
+            "state.ups.raspberry.charge eq 100": {
+                "x": 100,
+                "y": 100,
+                "size": 40,
+                "icon": "wifi-3",
+                "disabled": false,
+                "click": ["set.ups.raspberry.disabled 1", "disabled"]
+            },
+            "state.ups.raspberry.charge leq 50": {
+                "icon": "wifi-2",
+                "disabled": false,
+                "click": ["set.ups.raspberry.dummy", "state.ups.raspberry.charge eq 100"]
+            },
+            "state.ups.raspberry.charge like *": {
+                "icon": "wifi-1",
+                "disabled": false
+            },
+            "disabled": {
+                "icon": "wifi-1",
+                "disabled": true,
+                "click": false
+            }
         }
     ]
 }

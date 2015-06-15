@@ -4,15 +4,15 @@
  * Main scene controller
  */
 
-var scene = angular.module('Scene', ['Button']);
+var module = angular.module('Scene', ['Button']); // jshint ignore:line
 
-scene.service('SceneService', ['$q', function($q) {
+module.service('SceneService', ['$q', function($q) {
 
     var schema;
     /**
      * draw scene described in json
      */
-    function loadScene(json) {
+    function loadScene(json, scope) {
         return $q(function (resolve, reject) {
             schema = json; // store schema settings
             document.title = json.name + ' v.' + json.version; // set header
@@ -22,6 +22,9 @@ scene.service('SceneService', ['$q', function($q) {
                 var img = document.createElement('img');
                 img.src = json.image;
                 document.querySelector('#scene').appendChild(img);
+            }
+            for(var i in json.buttons) { // append buttons
+                scope.buttons.push(json.buttons[i]);
             }
             resolve();
         });
@@ -34,52 +37,42 @@ scene.service('SceneService', ['$q', function($q) {
         el.href = href;
         document.querySelector('head').appendChild(el);
     }
+// alert(window.innerWidth +' ' +window.innerHeight);
+    function mapX(value) {
+        return value  * window.innerWidth / schema.resolution.width;
+    }
+
+    function mapY(value) {
+        return value  * window.innerHeight / schema.resolution.height;
+    }
+
+    function getSchema() {
+        return schema || {};
+    }
 
     return {
-        load: loadScene
+        load: loadScene,
+        schema: getSchema,
+        mapX: mapX,
+        mapY: mapY
     };
 
 }]);
 
-scene.controller('SceneCtrl', ['$scope', '$location', '$http', 'SceneService', function($scope, $location, $http, service) {
+module.controller('SceneCtrl', ['$scope', '$location', '$http', 'SceneService', function($scope, $location, $http, service) {
 
     var path = $location.path();
     if(!path) {
         return console.log('please specify scene name');
     }
 
-    $scope.buttons = [
-        { // eq, ne, gt, lr, ge, le
-            'state.ups.raspberry.charge eq 100': {
-                x: 10,
-                y: 10,
-                size: 10,
-                icon: 'wifi-3',
-                disabled: false,
-                click: ['set.ups.raspberry.disabled 1', 'disabled']
-            },
-            'state.ups.raspberry.charge leq 50': {
-                icon: 'wifi-2',
-                disabled: false,
-                click: ['set.ups.raspberry.dummy', 'state.ups.raspberry.charge eq 100']
-            },
-            'state.ups.raspberry.charge like *': {
-                icon: 'wifi-1',
-                disabled: false
-            },
-            'disabled': {
-                icon: 'wifi-1',
-                disabled: true,
-                click: false
-            }
-        }
-    ];
+    $scope.buttons = [];
 
     // load scene schema and draw it on page
     $http.get('/scenes' + path + '.json')
         .then(function (res) {
             // 2do: validate https://github.com/mafintosh/is-my-json-valid
-            return service.load(res.data);
+            return service.load(res.data, $scope);
         })
         .then(function (msg) {
             console.log(msg);

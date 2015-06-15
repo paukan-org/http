@@ -18,7 +18,7 @@ var allowedOperands = {
     }
 };
 
-module.directive('ngButton', ['ApiService', function(Api) {
+module.directive('ngButton', ['ApiService', 'SceneService', function(api, scene) {
     return {
         replace: true,
         scope: { config:'=' },
@@ -37,24 +37,23 @@ module.directive('ngButton', ['ApiService', function(Api) {
             scope.click = function () {
 
                 var click = currentState.click,
-                    action = click[0], state = click[1];
-                if(action) {
+                    action = click[0].split(' '), state = click[1];
+
+                if(action[0]) {
                     console.log('send ' + action);
-                    // var bind = eventName.split('.');
-                    // Api.request(bind[0], bind[1], bind[2], [click]);
+                    api.send(action[0], action.slice(1));
                 }
                 if(state) {
                     setState(state);
                 }
             };
 
-            // // scope.$watch('config', redraw);
-
             /**
              * convert string event to callback and put it to map
              */
             function event2map(str, map) {
 
+                // warn: posible memleack passing 'arr'
                 var arr = str.split(' '), name = arr[0], payload;
                 if(arr.length === 1) { // 'event' => always true on this event
                     payload = function () { return str; };
@@ -90,15 +89,20 @@ module.directive('ngButton', ['ApiService', function(Api) {
              * update button visible ui according current state
              */
             function redraw() {
-
+                var size = scene.mapX(currentState.size);
                 el.className = 'btn btn-circle btn-' + (currentState.type || 'default');
                 elSpan.className = 'icon icon-' + currentState.icon;
-                // elStyle.width = config.size + 'vmin'; // recalc
-                // elStyle.height = config.size + 'vmin';
-                // elStyle.fontSize = (config.size - 4) + 'vmin';
-                // elStyle.lineHeight = config.size + 'vmin';
-                // elStyle.left = config.x + 'vmin';
-                // elStyle.top = config.y + 'vmin';
+                elStyle.width = size + 'px';
+                elStyle.height = size + 'px';
+                elStyle.fontSize = size + 'px';
+                elStyle.left = scene.mapX(currentState.x) + 'px';
+                elStyle.top = scene.mapY(currentState.y) + 'px';
+                el.disabled = true;
+                if(currentState.disabled) {
+                    el.setAttribute('disabled', true);
+                } else {
+                    el.removeAttribute('disabled');
+                }
             }
 
             // prepare map of events with links to states
