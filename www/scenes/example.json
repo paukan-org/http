@@ -7,12 +7,11 @@
         "width": 1360,
         "height": 728
     },
-    "image": "/assets/images/flat.png",
     "buttons": [
         {
             "state.ups.raspberry.charge eq 100": {
-                "x": 100,
-                "y": 100,
+                "x": 330,
+                "y": 105,
                 "size": 40,
                 "icon": "wifi-3",
                 "disabled": false,

@@ -37,7 +37,6 @@ module.service('SceneService', ['$q', function($q) {
         el.href = href;
         document.querySelector('head').appendChild(el);
     }
-// alert(window.innerWidth +' ' +window.innerHeight);
     function mapX(value) {
         return value  * window.innerWidth / schema.resolution.width;
     }
