@@ -1,14 +1,13 @@
 'use strict';
 
 // curl -H "Content-Type: application/json" -X POST -d '{ "cmd": "set", "payload": ["key", "value"]}' http://localhost:8080/api/redis
-
 module.exports = function (redis) {
 
     if(!redis) {
         throw new Error('this type of connection dont support redis requests');
     }
 
-    return function *(next) {
+    return function *() {
 
         var body = this.request.body,
             cmd = body.cmd,
@@ -23,13 +22,7 @@ module.exports = function (redis) {
         }
 
         function exec(callback) {
-            payload.push(function () { // append callback
-                var arg = [];
-                for(var i=0, l=arguments.length; i < l; i++) {
-                    arg[i] = arguments[i];
-                }
-                return callback(null, arg);
-            });
+            payload.push(callback);
             redis[cmd].apply(redis, payload);
         }
         this.body = yield exec;
