@@ -1,0 +1,17 @@
+{
+  "name": "paukan-http-client",
+  "main": "index.js",
+  "version": "0.0.0",
+  "homepage": "https://github.com/paukan-org/http",
+  "authors": [
+    "Andrey <vkfont@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,163 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:svidget="http://www.svidget.org/svidget"
+		 width="200" height="200" viewBox="0 0 200 200" style="background:transparent">
+	<title>Donut Gauge</title>
+	<desc>Visualizes a donut-style gauge with text value in the middle.</desc>
+
+	<style>
+		<![CDATA[		#textLabel { font-size: 16px; font-family: Helvetica; alignment-baseline: text-top; }		#spanContent { font-size: 28px; font-weight: bold; margin: 0px; }		]]>
+	</style>
+
+	<svidget:params>
+		<svidget:param name="data" shortname="d" type="number" description="The percentage to fill. Value should be between 0 and 1." />
+		<svidget:param name="color" shortname="color" type="string" subtype="color" binding="#foreArc@stroke" description="The circle foreground color." />
+		<svidget:param name="backColor" shortname="bcolor" type="string" subtype="color" binding="#backCircle@fill" description="The circle background color." />
+		<svidget:param name="textColor" shortname="tcolor" type="string" subtype="color" binding="#textLabel@fill" description="The text color." />
+		<svidget:param name="showText" shortname="st" type="bool" description="Whether to show the text in the middle." />
+		<svidget:param name="width" shortname="w" type="number" description="The width of the donut portion of the circle." />
+	</svidget:params>
+
+	<defs>
+		<mask id="donutMask">
+			<rect x="0" y="0" width="100%" height="100%" fill="white" />
+			<circle r="48" cx="100" cy="100" fill="black" />
+		</mask>
+	</defs>
+
+	<g onclick="handleClick(123)">
+		<circle id="backCircle" r="98" cx="100" cy="100" fill="#ddd" mask="url(#donutMask)" />
+		<path id="foreArc" fill="none" stroke="#7f7fdf" stroke-width="50" d="M 100,27 A 73,73 0 1,1 27,100" />
+		<text id="textLabel" x="100" y="110" text-anchor="middle" fill="#3f3f3f" visibility="visible">
+			<tspan id="spanContent">75</tspan> %
+		</text>
+	</g>
+
+	<script type="application/javascript" xlink:href="bower_components/svidget/dist/svidget.js"></script>
+	<script type="application/javascript">
+		<![CDATA[
+
+		var _data = 0;
+		var _width = 50;
+		var FULL_RADIUS = 100;
+		var DONUT_RADIUS = FULL_RADIUS - 2; // 98
+
+		function handleClick(value) {
+			alert(value);
+		}
+
+		function init() {
+			//setArcPath(0.75);
+			//debugger;
+			var widget = svidget.current();
+			widget.param("data").on("set", onParamDataSet);
+			widget.param("width").on("set", onParamWidthSet);
+			widget.param("showText").on("set", onParamShowTextSet);
+			setParamData(widget.param("data").value());
+			setParamWidth(widget.param("width").value());
+			setParamWidth(widget.param("showText").value());
+		}
+
+		function onParamDataSet(e) {
+			//alert('onParamDataSet');
+			var val = parseFloat(e.value.value); // { value: val }
+			setParamData(val);
+		}
+
+		function onParamWidthSet(e) {
+			var w = parseInt(e.value.value); // { value: val }
+			setParamWidth(w);
+		}
+
+		function onParamShowTextSet(e) {
+			var show = e.value.value;
+			setParamShowText(show);
+		}
+
+		// range: 0 to 1
+		function setParamData(val) {
+			val = rangify(val, 0, 1);
+			// set donut arc
+			setArcPath(val);
+			// set text
+			setContentLabel(val);
+			// set global data
+			_data = val;
+		}
+
+		// range: 1 to 98
+		function setParamWidth(w) {
+			w = rangify(w, 1, DONUT_RADIUS);
+			// set donut mask - i.e. empty hole in middle aka the donut hole
+			var rad = DONUT_RADIUS - w;
+			setMaskRadius(rad);
+			setArcWidth(w);
+			// set global width
+			_width = w;
+			// re-set arc path
+			setArcPath(_data);
+		}
+
+		function setParamShowText(show) {
+			//debugger;
+			var textLabel = document.getElementById("textLabel");
+			var v = !show ? "hidden" : "visible";
+			textLabel.setAttribute("visibility", v);
+		}
+
+		function setMaskRadius(rad) {
+			var maskCir = document.querySelector("#donutMask > circle");
+			maskCir.setAttribute("r", rad);
+		}
+
+		function setContentLabel(pct) {
+			var val = parseInt(pct * 100);
+			var spanContent = document.getElementById("spanContent");
+			spanContent.textContent = val + "";
+		}
+
+		function setArcPath(pct) {
+			var path = generateArcPath(pct);
+			var foreArc = document.getElementById("foreArc");
+			foreArc.setAttribute("d", path);
+		}
+
+		function setArcWidth(w) {
+			var foreArc = document.getElementById("foreArc");
+			foreArc.setAttribute("stroke-width", w);
+		}
+
+		// pct == 0 to 1
+		function generateArcPath(pct) {
+			var baseY = 2;
+			var halfWidth = _width / 2.0;
+			var startY = baseY + halfWidth;
+			var arcRadius = FULL_RADIUS - startY;
+			var largeArc = pct > 0.5 ? 1 : 0; // if greater than 50 we need to use large arc in path
+			var pctRadians = (Math.PI * 2) * pct;
+			var endX = round3((Math.sin(pctRadians) * arcRadius) + FULL_RADIUS);
+			var endY = round3((-Math.cos(pctRadians) * arcRadius) + FULL_RADIUS);
+			if (endX == 100 && pct > 0) endX = 99.999; // this corrects issue with path if start and end are same it won't draw an arc
+			//debugger;
+
+			// M 100,27 A 73,73 0 1,1 27,100
+			var path = "M 100," + startY + " "; // move to start
+			path += "A " + arcRadius + "," + arcRadius + " 0 " + largeArc + ",1 " + endX + "," + endY;
+
+			return path;
+		}
+
+		function rangify(val, min, max) {
+			if (isNaN(val) || val < min) val = min;
+			if (val > max) val = max;
+			return val;
+		}
+
+		function round3(val) {
+			return parseInt(val * 1000) / 1000.0;
+		}
+
+		window.addEventListener('load', init, false);
+
+	  ]]>
+	</script>
+</svg>

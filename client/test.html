@@ -1,12 +1,9 @@
-<img id="img">
-<script src="/socket.io/socket.io.js"></script>
-<script>
-    var img = document.getElementById('img'),
-        socket = io('');
-    socket.on('data', function(msg) {
-        if(msg.type === 'rtsp') {
-            // name, data
-            img.src = 'data:image/jpeg;base64,' + msg.data;
-        }
-    });
-</script>
+<script src="bower_components/svidget/dist/svidget.js"></script>
+<object id="myDonutGauge" role="svidget" data="donut.svg" type="image/svg+xml" width="200" height="200">
+	<param name="data" value="0.55" />
+	<param name="color" value="#da3333" />
+	<param name="backColor" value="#ffac33" />
+	<param name="textColor" value="#da3333" />
+	<param name="showText" value="true" />
+	<param name="width" value="40" />
+</object>
