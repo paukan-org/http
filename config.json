@@ -1,4 +1,7 @@
 {
     "id": "http",
-    "listen": 8080
+    "listen": 8080,
+    "rtsp": {
+        "outdoor": "rtsp://192.168.1.10:554/user=admin&password=helloworld&channel=1&stream=1.sdp"
+    }
 }

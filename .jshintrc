@@ -15,5 +15,6 @@
 	"regexp": true,
 	"unused": false,
 	"undef": true,
-	"predef": ["angular"]
+	"predef": ["angular"],
+	"esnext": true
 }
