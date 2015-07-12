@@ -1,10 +1,13 @@
 'use strict';
 
-var router = require('koa-router')({
-    prefix: '/api'
-});
+module.exports = function (cfg, paukan) {
 
-router.all('/request/:service/:device/:state', require('./request'));
-router.all('/redis', require('./redis'));
+    var router = require('koa-router')({
+        prefix: '/api'
+    });
 
-module.exports = router.routes();
+    router.all('/request/:service/:device/:state', require('./request'));
+    router.post('/redis', require('./redis')(paukan.network.redis));
+
+    return router.routes();
+};
