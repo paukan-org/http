@@ -7,3 +7,17 @@
 	<param name="showText" value="true" />
 	<param name="width" value="40" />
 </object>
+
+
+<img id="img">
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    var img = document.getElementById('img'),
+        socket = io('');
+    socket.on('data', function(msg) {
+        if(msg.type === 'rtsp') {
+            // name, data
+            img.src = 'data:image/jpeg;base64,' + msg.data;
+        }
+    });
+</script>
