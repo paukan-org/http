@@ -1,21 +1,23 @@
-(function(Reflux, global) {
+(function(Reflux, EventActions, global) {
     'use strict';
 
+    var events = [];
     global.eventStore = Reflux.createStore({
+        listenables: [EventActions],
 
-        onEditItem: function(itemKey, newLabel) {
-            //
+        init: function () {
+            console.log('store eventStore initialized');
         },
-        // called whenever we change a list. normally this would mean a database API call
-        update: function(list) {
-            // localStorage.setItem(localStorageKey, JSON.stringify(list));
-            this.trigger(list);
-        },
-        // this will be called by all listening components as they register their listeners
-        getInitialState: function() {
 
-            return 'qwe';
+        onIncomingEvent: function(event) {
+            events.unshift(event);
+            this.trigger();
+        },
+
+        getLastEvents: function () {
+            return events.slice(0, 20);
         }
+
     });
 
-})(window.Reflux, window);
+})(window.Reflux, window.eventActions, window);

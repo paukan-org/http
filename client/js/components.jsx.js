@@ -2,7 +2,7 @@
 
 // https://github.com/spoike/refluxjs-todo
 (function(React, Reflux, eventActions, eventStore, global) {
-
+    'use strict';
     // Renders a single Todo item in the list
     // Used in TodoMain
     // var TodoItem = React.createClass({
@@ -196,4 +196,31 @@
     //     React.render(<Handler/>, document.getElementById('todoapp'));
     // });
 
-})(window.React, window.Reflux, window.EventActions, window.eventStore, window);
+    var EventLog = React.createClass({
+
+        mixins: [Reflux.connect(eventStore, 'event')],
+
+        emitEvent: function () {
+            eventActions.incomingEvent('qwe');
+        },
+        render: function() {
+
+            var events = eventStore.getLastEvents();
+            // this.state.events
+            return (
+                <div>
+                    <button onClick={this.emitEvent}>tst</button>
+                    <ul>
+                    {
+                        events.map(function(item, i) {
+                            return <li key={i}>{item}</li>
+                        })
+                    }
+                    </ul>
+                </div>
+            )
+        }
+    });
+
+    React.render(<EventLog events="['qwe', 'asd']" />, document.getElementById('main'));
+})(window.React, window.Reflux, window.eventActions, window.eventStore, window);

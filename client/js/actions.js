@@ -2,8 +2,7 @@
     'use strict';
 
     global.eventActions = Reflux.createActions([
-        'incomeEvent',
-        'secondAction'
+        'incomingEvent'
     ]);
 
 })(window.Reflux, window);
